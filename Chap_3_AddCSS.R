@@ -2,13 +2,27 @@ library(shiny)
 library(tidyverse)
 library(gapminder)
 
+my_css <- "
+#download_data {
+/* Change the background colour of the download button
+to orange. */
+background: orange;
 
+/* Change the text size to 20 pixels. */
+font-size: 20px;
+}
+
+#table {
+/* Change the text colour of the table to red. */
+color: red;
+}
+"
 
 ui <- fluidPage(
   h1("Gapminder"),
-  # Create a container for tab panels
+  # Add the CSS that we wrote to the Shiny app
+  tags$style(my_css),
   tabsetPanel(
-    # Create an "Inputs" tab
     tabPanel(
       title = "Inputs",
       sliderInput(inputId = "life", label = "Life expectancy",
@@ -18,12 +32,10 @@ ui <- fluidPage(
                   choices = c("All", levels(gapminder$continent))),
       downloadButton("download_data")
     ),
-    # Create a "Plot" tab
     tabPanel(
       title = "Plot",
       plotOutput("plot")
     ),
-    # Create "Table" tab
     tabPanel(
       title = "Table",
       DT::dataTableOutput("table")
